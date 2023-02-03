@@ -58,6 +58,13 @@
 # @lc code=start
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
+        max_sub = max_end = nums[0]
+        # end = True
+        for num in nums[1:]:
+            max_end = max(max_end+num,num)
+            max_sub = max(max_sub,max_end)
+            # print(max_end,max_sub)
+        return max_sub
         
 # @lc code=end
 
