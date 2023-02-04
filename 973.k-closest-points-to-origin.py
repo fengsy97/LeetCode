@@ -55,14 +55,31 @@
 # 
 #
 
-def insert_new(Sorted_queue,Sorted_value)
+
 
 # @lc code=start
+def insert_new(Sorted_queue,Sorted_value,k,income,new_value):
+    start = 0
+    end = len(Sorted_value)-1
+    while(start <= end):
+        mid = int((end - start)/2 ) + start
+        if(Sorted_value[mid] < new_value):
+            start = mid + 1
+        else:
+            end = mid - 1
+    Sorted_queue.insert(start,income)
+    Sorted_value.insert(start,new_value)
+    if(len(Sorted_queue) > k):
+        Sorted_queue.pop()
+        Sorted_value.pop()
+
 class Solution:
     def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
         Sorted_queue = []
         Sorted_value = []
-
+        for i in range(len(points)):
+            insert_new(Sorted_queue,Sorted_value,k,points[i],points[i][0]*points[i][0]+points[i][1]*points[i][1])
+        return Sorted_queue
         
 # @lc code=end
 
