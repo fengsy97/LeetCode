@@ -75,18 +75,38 @@
 class MyQueue:
 
     def __init__(self):
-        
+        self.stack1 = []
+        self.stack2 = []
+        self.queue_len = 0
 
     def push(self, x: int) -> None:
-        
+        self.stack1.append(x)
+        self.queue_len += 1
+        return None
 
     def pop(self) -> int:
-        
+        if(len(self.stack2)):
+            self.queue_len -= 1
+            return self.stack2.pop()
+        else:
+            for i in range(self.queue_len):
+                self.stack2.append(self.stack1.pop())
+            self.stack1.clear()
+            self.queue_len -= 1
+            return self.stack2.pop()
 
     def peek(self) -> int:
+        if(len(self.stack2)):
+            return self.stack2[-1]
+        else:
+            for i in range(self.queue_len):
+                self.stack2.append(self.stack1.pop())
+            self.stack1.clear()
+            return self.stack2[-1]
         
 
     def empty(self) -> bool:
+        return self.queue_len == 0
         
 
 
