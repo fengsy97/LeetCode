@@ -96,9 +96,26 @@ class Node:
         self.val = val
         self.neighbors = neighbors if neighbors is not None else []
 """
+def bfs(node,hash_table,new_node):
+    if(not node.neighbors):return
+    for neib in node.neighbors:
+        if(neib.val in hash_table):
+            new_node.neighbors.append(hash_table[neib.val])
+        else:
+            new_neib = Node(neib.val)
+            hash_table[neib.val] = new_neib
+            bfs(neib,hash_table,new_neib)
+            new_node.neighbors.append(new_neib)
+    return
 
 class Solution:
     def cloneGraph(self, node: 'Node') -> 'Node':
-        
+        if (not node): return node
+        hash_table = {}
+        new_node = Node(node.val)
+        hash_table[node.val] = new_node
+        bfs(node,hash_table,new_node)
+        return new_node
+
 # @lc code=end
 
