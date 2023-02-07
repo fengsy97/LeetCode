@@ -59,8 +59,50 @@
 #
 
 # @lc code=start
+
+
+
+
 class Solution:
+    def judge(self,i,fathers):
+        self.visit.add(i)
+        for require in self.requirelist[i]:
+            # print("require add ", require)
+            self.cout.add(require)
+            if require in fathers:return False
+        fathers.append(i)
+        for require in self.requirelist[i]:
+            if(not require in self.visit):
+                if(not self.judge(require,fathers)):return False
+        fathers.pop()
+        return True
+            
+
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        print("test")
+        self.requirelist = [[]for i in range(numCourses)]
+        for c1, c2 in prerequisites:
+            self.requirelist[c2].append(c1)
+        # print(self.requirelist) 
+        self.hash_table = []
+        self.cout = set()
+        self.visit = set()
+        
+        for i in range(numCourses):
+            
+            if(not self.requirelist[i]): continue
+            if(i in self.cout):continue
+            print(i)
+            self.hash_table.clear()
+            self.hash_table.append(i)
+            self.visit.clear()
+            if(not self.judge(i,self.hash_table)):
+                return False
+        return True
+            # for require in self.requirelist[i]:
+                  
+
+
         
 # @lc code=end
 
