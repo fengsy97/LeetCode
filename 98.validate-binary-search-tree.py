@@ -60,7 +60,20 @@
 #         self.left = left
 #         self.right = right
 class Solution:
+    def mid_search(self,root):
+        # if(not root)
+        if(root.left):self.mid_search(root.left)
+        self.list.append(root.val)
+        if(root.right):self.mid_search(root.right)
+
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        if(not root):return True
+        self.list = []
+        self.mid_search(root)
+        # print(self.list)
+        for i in range(1,len(self.list)):
+            if(self.list[i-1] >= self.list[i]):return False
+        return True
         
 # @lc code=end
 
