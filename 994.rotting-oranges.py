@@ -81,15 +81,19 @@ class Solution:
         self.nexts = [[1,0],[-1,0],[0,1],[0,-1]]
         # if(not self.remain):return 0
         while(self.rot and self.remain):
+            # print(self.rot)
+            # print(self.remain)
             length = len(self.rot)
             self.nums += 1
             for i in range(length):
-                x,y = self.rot.pop()
+                x,y = self.rot.pop(0)
                 grid[x][y] = self.nums
                 for next in self.nexts:
                     if (x+next[0],y+next[1]) in self.remain:
                         self.rot.append((x+next[0],y+next[1]))
                         self.remain.remove((x+next[0],y+next[1]))
+            # print(self.rot)
+            # print(self.remain)
         if(self.remain): return -1
         return self.nums-3
 # @lc code=end
