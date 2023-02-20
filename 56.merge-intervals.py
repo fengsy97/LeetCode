@@ -48,9 +48,36 @@
 
 # @lc code=start
 class Solution:
+    def find(self,intervals,target):
+        start = 0
+        end = len(intervals)  - 1
+        while(start <= end):
+            mid = int((end - start)/2) + start
+            if(intervals[mid][0] <= target[1]):
+                start = mid + 1
+            else:
+                end = mid - 1
+        return end
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
-        sorted(intervals, key=lambda interval: interval[0])
-        print(intervals)
-        return intervals
+        # sorted(intervals, key=lambda interval: interval[0])
+        intervals.sort(key=lambda x: (x[0],x[1]))
+        # print(intervals)
+        # print(self.find(intervals,intervals[2]))
+        result = []
+        result.append(intervals.pop(0))
+        while(intervals):
+            target = result.pop()
+
+            rank = self.find(intervals,target)
+            # print(intervals,rank,target)
+            
+            if(rank >= 0):
+                # temp = 
+                result.append([target[0],max(target[1],max([x[1] for x in intervals[:rank+1]]))])
+                del intervals[:rank+1]
+            else:
+                result.append(target)
+                result.append(intervals.pop(0))
+        return result
 # @lc code=end
 
