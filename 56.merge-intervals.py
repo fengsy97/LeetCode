@@ -60,7 +60,7 @@ class Solution:
         return end
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
         # sorted(intervals, key=lambda interval: interval[0])
-        intervals.sort(key=lambda x: (x[0],x[1]))
+        intervals.sort(key=lambda x: x[0])
         # print(intervals)
         # print(self.find(intervals,intervals[2]))
         result = []
@@ -68,13 +68,13 @@ class Solution:
         while(intervals):
             target = result.pop()
 
-            rank = self.find(intervals,target)
+            # rank = self.find(intervals,target)
             # print(intervals,rank,target)
             
-            if(rank >= 0):
+            if(target[1]>=intervals[0][0]):
                 # temp = 
-                result.append([target[0],max(target[1],max([x[1] for x in intervals[:rank+1]]))])
-                del intervals[:rank+1]
+                result.append([target[0],max(target[1],intervals[0][1])])
+                intervals.pop(0)
             else:
                 result.append(target)
                 result.append(intervals.pop(0))
