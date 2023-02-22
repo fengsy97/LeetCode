@@ -78,6 +78,7 @@ class Solution:
     def rotate(self, nums: List[int], k: int) -> None:
         if(not k):return None
         n = hcf(len(nums),k)
+        temp = 0
         if(not n):
             pos = 0
             next_pos = (k)%len(nums)
