@@ -39,18 +39,19 @@
 
 # @lc code=start
 class Solution:
-    def find(self,num,k):
-        if num < k : return
-        
-
 
     def subarraySum(self, nums: List[int], k: int) -> int:
-        self.count = {}
-        self.result = 0
-        for num in nums:
-            if num in self.count:
-                self.count[num] += 1
-            else: self.count[num] = 1
+        count = {}
+        result = 0
+        temp = 0
+        for i in range(len(nums)):
+            temp += nums[i]
+            if(temp == k):result += 1
+            if(temp - k in count):result += count[temp - k]
+            if temp in count:
+                count[temp] += 1
+            else: count[temp] = 1
+        return result
         
 # @lc code=end
 
