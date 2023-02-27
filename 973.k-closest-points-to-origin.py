@@ -58,28 +58,61 @@
 
 
 # @lc code=start
-def insert_new(Sorted_queue,Sorted_value,k,income,new_value):
-    start = 0
-    end = len(Sorted_value)-1
-    while(start <= end):
-        mid = int((end - start)/2 ) + start
-        if(Sorted_value[mid] < new_value):
-            start = mid + 1
-        else:
-            end = mid - 1
-    Sorted_queue.insert(start,income)
-    Sorted_value.insert(start,new_value)
-    if(len(Sorted_queue) > k):
-        Sorted_queue.pop()
-        Sorted_value.pop()
-
 class Solution:
+    def dis(self,vector):
+        return vector[0] * vector[0] + vector[1] * vector[1]
+    def insert(self,heap,target):
+        heap.append(target)
+        start = len(heap) - 1
+        while(int((start - 1)/2) >= 0 and self.dis(heap[int((start - 1)/2)]) > self.dis(heap[start]) ):
+            target = heap[int((start - 1)/2)]
+            heap[int((start - 1)/2)] = heap[start]
+            heap[start] = target
+            start = int((start - 1)/2)
+    def shift(self,heap):
+        start = 0
+        while(2 * start + 1 < len(heap)):
+            target = 0
+            if(2 * start + 2 < len(heap)):
+                if(self.dis(heap[2 * start + 2]) > self.dis(heap[2 * start + 1])):
+                    if(self.dis(heap[start]) > self.dis(heap[2 * start + 1])):
+                        target = 2 * start + 1
+                else :
+                    if(self.dis(heap[start]) > self.dis(heap[2 * start + 2])):
+                        target = 2 * start + 2
+            else:
+                if(self.dis(heap[start]) > self.dis(heap[2 * start + 1])):
+                    target = 2 * start + 1
+            if(target):
+                # print(start,target)
+                heap[start].append(heap[target].pop(0))
+                heap[start].append(heap[target].pop(0))
+                heap[target].append(heap[start].pop(0))
+                heap[target].append(heap[start].pop(0))
+                start = target
+            else:break
+        return
+    def pop(self,heap):
+            temp = heap[0]
+            heap[0] = heap[-1]
+            heap[-1] = temp
+            # print(heap)
+            self.shift(heap[:-1])
+            # print(heap)
+            return heap.pop()
+
     def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
-        Sorted_queue = []
-        Sorted_value = []
-        for i in range(len(points)):
-            insert_new(Sorted_queue,Sorted_value,k,points[i],points[i][0]*points[i][0]+points[i][1]*points[i][1])
-        return Sorted_queue
+        heap = []
+        for vector in points:
+            self.insert(heap,vector)
+        # print(heap)
+        result = []
+        for i in range(k):
+            result.append(self.pop(heap))
+            # print(heap)
+        # return heap
+        return result
+        
         
 # @lc code=end
 

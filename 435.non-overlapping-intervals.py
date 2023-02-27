@@ -59,16 +59,20 @@
 # @lc code=start
 class Solution:
     def find(self,intervals,pos):
-        print(pos,self.remain,intervals)
+        
         if(pos == len(intervals) - 1):
             if(len(intervals) > self.remain):self.remain = len(intervals)
             return
         if(len(intervals) <= self.remain):return
         if(tuple(intervals[pos]) in self.judge):
-            if(pos > self.judge[tuple(intervals[pos])]):
+            if(pos < self.judge[tuple(intervals[pos])]):
+                # print(pos,self.judge[tuple(intervals[pos])],tuple(intervals[pos]))
                 return
+            else:
+                self.judge[tuple(intervals[pos])] = pos
         else:
             self.judge[tuple(intervals[pos])] = pos
+            # print(pos,tuple(intervals[pos]))
         if(intervals[pos][1]>intervals[pos+1][0]):
             temp = intervals[pos]
             intervals.pop(pos)
