@@ -68,33 +68,42 @@ class Solution:
                 temp[word[i]][0] = 1
             temp = temp[word[i]][1]
         # temp[0]
-    def find(self,s,judge):
+    def find(self,s,judge,result):
         # print(s)
 
         temp = self.head
         # print(judge)
         if(not s):
+            if(judge):self.results.append(result[1:])
             return True
-        if(judge and s in self.judge):
-            return self.judge[s]
+        # if(judge and s in self.judge):
+        #     if(self.judge[s][0]):
+        #         self.results.append(self.judge[s][1][1:])
+        #     return
+        have_sub = 0
         for i in range(len(s)):
             if(s[i] in temp):
                 if(temp[s[i]][0]):
-                    if(self.find(s[i+1:],judge)):
-                        if(judge):self.judge[s] = True
-                        return True
+                    if(self.find(s[i+1:],judge,result + " " + s[:i+1])):
+                        # if(judge):self.judge[s[i+1:]] = [True,result + " " + s[:i+1]]
+                        # return True
+                        have_sub = 1
                 temp = temp[s[i]][1]
             else:
-                if(judge):self.judge[s] = False
+                if(judge):self.judge[s] = [False]
                 return False
+        return have_sub
     def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:
         count = len(wordDict)
         self.head = {}
         self.judge = {}
+        self.results = []
         for i in range(count):
-            if(not self.find(wordDict[i],0)):self.insert(wordDict[i])
+            if(not self.find(wordDict[i],0,"")):self.insert(wordDict[i])
         # print(self.head)
-        return self.find(s,1)
+        # print("_________________")
+        self.find(s,1,"")
+        return self.results
         # return 1
 # @lc code=end
 
