@@ -70,6 +70,7 @@
 #
 
 # @lc code=start
+import random
 class RandomizedSet:
 
     def __init__(self):
@@ -92,9 +93,7 @@ class RandomizedSet:
           return False
 
     def getRandom(self) -> int:
-        num = self.hashtable.pop()
-        self.hashtable.add(num)
-        return num
+        return random.choice(list(self.hashtable))
 
 
 # Your RandomizedSet object will be instantiated and called as such:
