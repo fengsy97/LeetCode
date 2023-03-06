@@ -82,7 +82,6 @@ class Solution:
         
         while(len(count) < len(lists)):
             val,i = heapq.heappop(heap)
-            # lists[temp.next] = 
             temp.next = lists[i]
             temp = temp.next
             lists[i] = lists[i].next
@@ -90,7 +89,6 @@ class Solution:
                 count.append(i)
             else:
                 heapq.heappush(heap,(lists[i].val,i))
-                # lists.pop(i)
         return head.next
 
 # @lc code=end
