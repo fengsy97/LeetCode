@@ -63,11 +63,14 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         hash_dict = {}
+        result = []
         for i in range(len(nums)):
             if target-nums[i] in hash_dict:
+                # result.append([hash_dict[target-nums[i]],i])
                 return [hash_dict[target-nums[i]],i]
             else:
-                hash_dict[nums[i]] = i;
-        return [-1,-1]
+                hash_dict[nums[i]] = i
+        
+        return result
 # @lc code=end
 
